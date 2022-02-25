@@ -5,9 +5,12 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const dotenv = require("dotenv");
 
 const feedRoutes = require("./routes/feed");
 const authRoutes = require("./routes/auth");
+
+dotenv.config({ path: "./.env" });
 
 const app = express();
 
@@ -35,9 +38,7 @@ const fileFilter = (req, file, cb) => {
 
 // app.use(bodyParser.urlencoded()) // x-www-form-urlencoded <form>
 
-const MONGODB_URI =
-  "mongodb+srv://Daniel28:Opeoluwa28@cluster1.kt7wh.mongodb.net/messages";
-
+const MONGODB_URI = process.env.CONNECTION_STRING;
 app.use(bodyParser.json()); // application/json
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
